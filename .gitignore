@@ -1,0 +1,7 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dev scratch & local reference documents
+preview_*.png
+*.docx
