@@ -82,28 +82,174 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── 3. Toluca Hills CGI Site Map Zone Filters ──
-  const legendButtons = document.querySelectorAll('.legend-pill');
-  const hotspotPins = document.querySelectorAll('.hotspot-pin');
+  // ── 3. Interactive Site Map Master Plan Zoom, Pan & Location Animation Controller ──
+  const viewport = document.getElementById('cgi-map-viewport');
+  const imgWrapper = document.getElementById('cgi-img-container');
+  const btnZoomIn = document.getElementById('btn-zoom-in');
+  const btnZoomOut = document.getElementById('btn-zoom-out');
+  const btnZoomReset = document.getElementById('btn-zoom-reset');
+  const zoomBadge = document.getElementById('zoom-badge');
+  const buildingZones = document.querySelectorAll('.building-hover-zone');
 
-  legendButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      legendButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  let scale = 1;
+  let posX = 0;
+  let posY = 0;
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let initialPosX = 0;
+  let initialPosY = 0;
 
-      const filter = btn.getAttribute('data-filter');
+  const applyTransform = (animate = true) => {
+    if (!viewport) return;
+    if (animate) {
+      viewport.classList.remove('no-transition');
+    } else {
+      viewport.classList.add('no-transition');
+    }
+    viewport.style.transform = `scale(${scale}) translate(${posX}%, ${posY}%)`;
+    if (zoomBadge) {
+      zoomBadge.textContent = `${Math.round(scale * 100)}%`;
+    }
+  };
 
-      hotspotPins.forEach(pin => {
-        const zone = pin.getAttribute('data-zone');
-        if (filter === 'all' || zone === filter) {
-          pin.style.display = 'block';
-          pin.style.opacity = '1';
-        } else {
-          pin.style.opacity = '0.2';
-        }
-      });
+  const zoomToLocation = (targetScale, targetX, targetY, filterName = null) => {
+    scale = Math.min(Math.max(parseFloat(targetScale) || 1, 1), 4.5);
+    posX = scale === 1 ? 0 : (parseFloat(targetX) || 0);
+    posY = scale === 1 ? 0 : (parseFloat(targetY) || 0);
+
+    applyTransform(true);
+
+    buildingZones.forEach(zoneEl => {
+      const zone = zoneEl.getAttribute('data-zone');
+      if (!filterName || filterName === 'all' || zone === filterName) {
+        zoneEl.style.opacity = '1';
+        zoneEl.style.pointerEvents = 'auto';
+      } else {
+        zoneEl.style.opacity = '0.35';
+      }
+    });
+  };
+
+  // Zoom Button Controls
+  if (btnZoomIn) {
+    btnZoomIn.addEventListener('click', () => {
+      zoomToLocation(scale + 0.5, posX, posY);
+    });
+  }
+
+  if (btnZoomOut) {
+    btnZoomOut.addEventListener('click', () => {
+      if (scale <= 1.4) {
+        zoomToLocation(1, 0, 0, 'all');
+      } else {
+        zoomToLocation(scale - 0.5, posX, posY);
+      }
+    });
+  }
+
+  if (btnZoomReset) {
+    btnZoomReset.addEventListener('click', () => {
+      zoomToLocation(1, 0, 0, 'all');
+    });
+  }
+
+  // Building Hover Zone Clicks (Glide & Zoom directly to Building Location)
+  buildingZones.forEach(zoneEl => {
+    zoneEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetZoom = zoneEl.getAttribute('data-zoom') || 2.5;
+      const targetX = zoneEl.getAttribute('data-target-x') || 0;
+      const targetY = zoneEl.getAttribute('data-target-y') || 0;
+      const zone = zoneEl.getAttribute('data-zone');
+
+      zoomToLocation(targetZoom, targetX, targetY, zone);
     });
   });
+
+  // Mouse Wheel Smooth Zoom
+  if (imgWrapper) {
+    imgWrapper.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.3 : -0.3;
+      const newScale = Math.min(Math.max(scale + delta, 1), 4.5);
+
+      if (newScale === 1) {
+        zoomToLocation(1, 0, 0, 'all');
+      } else {
+        scale = newScale;
+        applyTransform(true);
+      }
+    }, { passive: false });
+
+    // Drag to Pan Controls
+    imgWrapper.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.cgi-toolbar') || e.target.closest('.cgi-zoom-controls')) return;
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      initialPosX = posX;
+      initialPosY = posY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging || scale <= 1) return;
+      const rect = imgWrapper.getBoundingClientRect();
+      const deltaX = ((e.clientX - startX) / rect.width) * 100 / (scale * 0.7);
+      const deltaY = ((e.clientY - startY) / rect.height) * 100 / (scale * 0.7);
+
+      posX = initialPosX + deltaX;
+      posY = initialPosY + deltaY;
+
+      // Limit panning boundaries
+      const maxPan = 45 * scale;
+      posX = Math.min(Math.max(posX, -maxPan), maxPan);
+      posY = Math.min(Math.max(posY, -maxPan), maxPan);
+
+      applyTransform(false);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Touch Support for Mobile Drag & Pan
+    imgWrapper.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        initialPosX = posX;
+        initialPosY = posY;
+      }
+    }, { passive: true });
+
+    imgWrapper.addEventListener('touchmove', (e) => {
+      if (!isDragging || scale <= 1 || e.touches.length !== 1) return;
+      const rect = imgWrapper.getBoundingClientRect();
+      const deltaX = ((e.touches[0].clientX - startX) / rect.width) * 100 / (scale * 0.7);
+      const deltaY = ((e.touches[0].clientY - startY) / rect.height) * 100 / (scale * 0.7);
+
+      posX = initialPosX + deltaX;
+      posY = initialPosY + deltaY;
+
+      applyTransform(false);
+    }, { passive: true });
+
+    imgWrapper.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Double Click to Toggle Zoom
+    imgWrapper.addEventListener('dblclick', (e) => {
+      if (e.target.closest('.cgi-toolbar') || e.target.closest('.cgi-zoom-controls')) return;
+      if (scale > 1) {
+        zoomToLocation(1, 0, 0, 'all');
+      } else {
+        zoomToLocation(2, 0, 0);
+      }
+    });
+  }
 
   // ── 4. Mobile Menu Toggle ──
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -542,6 +688,18 @@ document.addEventListener('DOMContentLoaded', () => {
         introOverlay.classList.add('hidden');
       }, 400);
     }
+  }
+
+  // Floating Toluca Hills Project Button Click (Smooth Scroll)
+  const floatingTolucaBtn = document.getElementById('floating-toluca-btn');
+  if (floatingTolucaBtn) {
+    floatingTolucaBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetSec = document.getElementById('toluca-cgi');
+      if (targetSec) {
+        targetSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   }
 
   // Auto-run intro on initial load

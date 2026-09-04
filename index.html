@@ -340,83 +340,255 @@
       </div>
     </section>
 
-    <!-- CGI Site Map Presentation Showcase -->
+    <!-- Interactive Site Map Master Plan Showcase -->
     <section class="cgi-showcase-section" id="toluca-cgi">
       <div class="cgi-container">
         <div class="cgi-frame">
-          <div class="cgi-img-wrapper">
-            <!-- Aerial CGI Master Plan Rendering -->
-            <img src="assets/toluca_cgi_sitemap.jpg" alt="AVA Toluca Hills 3D CGI Site Map Master Plan" class="cgi-image" id="cgi-main-img">
+          <div class="cgi-img-wrapper" id="cgi-img-container">
+            
+            <!-- Map Viewport Layer (Smooth Zoom & Pan Target) -->
+            <div class="cgi-map-viewport" id="cgi-map-viewport">
+              <!-- Aerial CGI Master Plan Rendering (1,151 Units Site Map) -->
+              <img src="assets/toluca_cgi_sitemap.jpg" alt="AVA Toluca Hills 1,151 Units Master Site Plan Map" class="cgi-image" id="cgi-main-img">
 
-            <!-- Toolbar Overlay -->
+              <!-- Interactive Building Hover Zones (Zero Icons/Pointers on Map) -->
+              <!-- Building A (27 units) -->
+              <div class="building-hover-zone" style="top: 27%; left: 23.5%; width: 4.5%; height: 7.5%;" data-zone="west" data-bldg="A" data-units="27" data-zoom="2.5" data-target-x="28" data-target-y="18">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building A — 27 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">West Hillside Ridge</div>
+                </div>
+              </div>
+
+              <!-- Building B (30 units) -->
+              <div class="building-hover-zone" style="top: 35.5%; left: 21.5%; width: 4.5%; height: 7.5%;" data-zone="west" data-bldg="B" data-units="30" data-zoom="2.5" data-target-x="30" data-target-y="12">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building B — 30 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">West Hillside Ridge</div>
+                </div>
+              </div>
+
+              <!-- Building C (45 units) -->
+              <div class="building-hover-zone" style="top: 34%; left: 16%; width: 5%; height: 8%;" data-zone="west" data-bldg="C" data-units="45" data-zoom="2.5" data-target-x="34" data-target-y="12">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building C — 45 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">West Hillside Ridge</div>
+                </div>
+              </div>
+
+              <!-- Building D (42 units) -->
+              <div class="building-hover-zone" style="top: 44%; left: 15%; width: 4.5%; height: 8%;" data-zone="west" data-bldg="D" data-units="42" data-zoom="2.5" data-target-x="34" data-target-y="2">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building D — 42 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">West Hillside Ridge</div>
+                </div>
+              </div>
+
+              <!-- Building E (60 units) -->
+              <div class="building-hover-zone" style="top: 44%; left: 9.5%; width: 5%; height: 9%;" data-zone="west" data-bldg="E" data-units="60" data-zoom="2.5" data-target-x="38" data-target-y="2">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building E — 60 Units</div>
+                  <div class="pop-body">Multi-Family High Density</div>
+                  <div class="pop-tag">West Terraces</div>
+                </div>
+              </div>
+
+              <!-- Building F (42 units) -->
+              <div class="building-hover-zone" style="top: 50%; left: 2.5%; width: 4.5%; height: 8%;" data-zone="west" data-bldg="F" data-units="42" data-zoom="2.5" data-target-x="44" data-target-y="-4">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building F — 42 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">West Perimeter</div>
+                </div>
+              </div>
+
+              <!-- Building G (60 units) -->
+              <div class="building-hover-zone" style="top: 63%; left: 3%; width: 5%; height: 9%;" data-zone="west" data-bldg="G" data-units="60" data-zoom="2.5" data-target-x="43" data-target-y="-16">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building G — 60 Units</div>
+                  <div class="pop-body">Multi-Family High Density</div>
+                  <div class="pop-tag">Southwest Slope</div>
+                </div>
+              </div>
+
+              <!-- Building H (36 units) -->
+              <div class="building-hover-zone" style="top: 64%; left: 8.5%; width: 4.5%; height: 7.5%;" data-zone="west" data-bldg="H" data-units="36" data-zoom="2.5" data-target-x="39" data-target-y="-17">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building H — 36 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">Southwest Terraces</div>
+                </div>
+              </div>
+
+              <!-- Building J (36 units) -->
+              <div class="building-hover-zone" style="top: 71%; left: 24%; width: 5%; height: 7.5%;" data-zone="central" data-bldg="J" data-units="36" data-zoom="2.5" data-target-x="26" data-target-y="-22">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building J — 36 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">Central Courtyard</div>
+                </div>
+              </div>
+
+              <!-- Building K (48 units) -->
+              <div class="building-hover-zone" style="top: 68.5%; left: 29%; width: 5.5%; height: 8%;" data-zone="central" data-bldg="K" data-units="48" data-zoom="2.5" data-target-x="20" data-target-y="-20">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building K — 48 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">Central Valley</div>
+                </div>
+              </div>
+
+              <!-- Building L (45 units) -->
+              <div class="building-hover-zone" style="top: 68.5%; left: 34.5%; width: 5%; height: 8%;" data-zone="central" data-bldg="L" data-units="45" data-zoom="2.5" data-target-x="14" data-target-y="-20">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building L — 45 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">Central Terraces</div>
+                </div>
+              </div>
+
+              <!-- Building M (72 units) -->
+              <div class="building-hover-zone" style="top: 67%; left: 40%; width: 6.5%; height: 9.5%;" data-zone="central" data-bldg="M" data-units="72" data-zoom="2.5" data-target-x="8" data-target-y="-19">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building M — 72 Units</div>
+                  <div class="pop-body">Major Multi-Family Structure</div>
+                  <div class="pop-tag">Central High Density</div>
+                </div>
+              </div>
+
+              <!-- Building N (33 units) -->
+              <div class="building-hover-zone" style="top: 56.5%; left: 41.5%; width: 5%; height: 7.5%;" data-zone="central" data-bldg="N" data-units="33" data-zoom="2.5" data-target-x="6" data-target-y="-8">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building N — 33 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">Mid-Campus Ridge</div>
+                </div>
+              </div>
+
+              <!-- Building P (63 units) -->
+              <div class="building-hover-zone" style="top: 43%; left: 51.5%; width: 6%; height: 9%;" data-zone="central" data-bldg="P" data-units="63" data-zoom="2.5" data-target-x="-4" data-target-y="5">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building P — 63 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">North Upper Ridge</div>
+                </div>
+              </div>
+
+              <!-- Building Q (72 units) -->
+              <div class="building-hover-zone" style="top: 56.5%; left: 55.5%; width: 6.5%; height: 9.5%;" data-zone="central" data-bldg="Q" data-units="72" data-zoom="2.5" data-target-x="-8" data-target-y="-8">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building Q — 72 Units</div>
+                  <div class="pop-body">Major Multi-Family Structure</div>
+                  <div class="pop-tag">Central Hub</div>
+                </div>
+              </div>
+
+              <!-- Building R (33 units) -->
+              <div class="building-hover-zone" style="top: 61.5%; left: 65%; width: 5%; height: 7.5%;" data-zone="central" data-bldg="R" data-units="33" data-zoom="2.5" data-target-x="-18" data-target-y="-13">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building R — 33 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">East Central Slope</div>
+                </div>
+              </div>
+
+              <!-- Building S (36 units) -->
+              <div class="building-hover-zone" style="top: 70.5%; left: 65%; width: 5%; height: 7.5%;" data-zone="central" data-bldg="S" data-units="36" data-zoom="2.5" data-target-x="-18" data-target-y="-22">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building S — 36 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">East Central Lower</div>
+                </div>
+              </div>
+
+              <!-- Building T (69 units) -->
+              <div class="building-hover-zone" style="top: 70.5%; left: 59%; width: 6%; height: 9%;" data-zone="central" data-bldg="T" data-units="69" data-zoom="2.5" data-target-x="-12" data-target-y="-22">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building T — 69 Units</div>
+                  <div class="pop-body">Multi-Family High Density</div>
+                  <div class="pop-tag">Central South Ridge</div>
+                </div>
+              </div>
+
+              <!-- Building U (108 units - Mega Structure) -->
+              <div class="building-hover-zone mega-zone" style="top: 84.5%; left: 82.5%; width: 12%; height: 9.5%;" data-zone="bldg-u" data-bldg="U" data-units="108" data-zoom="2.8" data-target-x="-37" data-target-y="-35">
+                <div class="bldg-pop-card mega-card">
+                  <div class="pop-header">Building U — 108 Units</div>
+                  <div class="pop-body">Largest Building on 205-Acre Campus</div>
+                  <div class="pop-tag">East Gateway Major Asset</div>
+                </div>
+              </div>
+
+              <!-- Building W (51 units) -->
+              <div class="building-hover-zone" style="top: 72.5%; left: 86.5%; width: 6%; height: 8.5%;" data-zone="east" data-bldg="W" data-units="51" data-zoom="2.5" data-target-x="-39" data-target-y="-24">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building W — 51 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">East Perimeter</div>
+                </div>
+              </div>
+
+              <!-- Building X (36 units) -->
+              <div class="building-hover-zone" style="top: 65%; left: 85%; width: 5%; height: 7.5%;" data-zone="east" data-bldg="X" data-units="36" data-zoom="2.5" data-target-x="-38" data-target-y="-16">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building X — 36 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">East Campus Cluster</div>
+                </div>
+              </div>
+
+              <!-- Building Y (59 units) -->
+              <div class="building-hover-zone" style="top: 58.5%; left: 88.5%; width: 6%; height: 8.5%;" data-zone="east" data-bldg="Y" data-units="59" data-zoom="2.5" data-target-x="-41" data-target-y="-10">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building Y — 59 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">Northeast Hillside</div>
+                </div>
+              </div>
+
+              <!-- Building Z (48 units) -->
+              <div class="building-hover-zone" style="top: 50%; left: 88%; width: 5.5%; height: 8%;" data-zone="east" data-bldg="Z" data-units="48" data-zoom="2.5" data-target-x="-40" data-target-y="-2">
+                <div class="bldg-pop-card">
+                  <div class="pop-header">Building Z — 48 Units</div>
+                  <div class="pop-body">Multi-Family Occupied Turnover</div>
+                  <div class="pop-tag">Northeast Ridge</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Header Toolbar Overlay -->
             <div class="cgi-toolbar">
               <div class="cgi-chip">
                 <span class="live-indicator"></span>
-                <span>AVA Toluca Hills Master Plan Visualization</span>
-              </div>
-              <div class="cgi-legend">
-                <button class="legend-pill active" data-filter="all" type="button">All Zones</button>
-                <button class="legend-pill" data-filter="residential" type="button">1,200+ Residential Units</button>
-                <button class="legend-pill" data-filter="staging" type="button">Trade Staging</button>
-                <button class="legend-pill" data-filter="amenities" type="button">Clubhouse & Amenities</button>
+                <span>AVA Toluca Hills Master Site Plan — 1,151 Units (23 Buildings / 205 Acres)</span>
               </div>
             </div>
 
-            <!-- Interactive Hotspot Pins -->
-            <!-- Hotspot 1: Barham Blvd Access -->
-            <div class="hotspot-pin" style="top: 86%; left: 49%;" data-zone="staging">
-              <div class="hotspot-radar">
-                <div class="hotspot-center"></div>
-              </div>
-              <div class="hotspot-tooltip">
-                <strong>Barham Blvd Primary Entrance</strong><br>
-                Trade traffic intake & daily supply sequencing
-              </div>
+            <!-- Floating Interactive Zoom Controls -->
+            <div class="cgi-zoom-controls">
+              <button class="zoom-btn" id="btn-zoom-in" title="Zoom In (+)" type="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </button>
+              <button class="zoom-btn" id="btn-zoom-out" title="Zoom Out (-)" type="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </button>
+              <span class="zoom-badge" id="zoom-badge">100%</span>
+              <button class="zoom-btn reset-btn" id="btn-zoom-reset" title="Reset View (↺)" type="button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                <span>Reset</span>
+              </button>
             </div>
 
-            <!-- Hotspot 2: Central Clubhouse & Pool -->
-            <div class="hotspot-pin" style="top: 48%; left: 51%;" data-zone="amenities">
-              <div class="hotspot-radar">
-                <div class="hotspot-center"></div>
-              </div>
-              <div class="hotspot-tooltip">
-                <strong>Leasing Center & Resort Pool</strong><br>
-                Resident community hub maintained uninterrupted
-              </div>
+            <!-- Interactive Hint Floating Banner -->
+            <div class="cgi-hint-bar">
+              <span class="hint-icon">🔍</span>
+              <span><strong>Interactive Location Inspector:</strong> Click location pins or sector pills to smoothly zoom & inspect buildings. Drag or scroll to pan map.</span>
             </div>
 
-            <!-- Hotspot 3: West Hillside Clusters -->
-            <div class="hotspot-pin" style="top: 44%; left: 27%;" data-zone="residential">
-              <div class="hotspot-radar">
-                <div class="hotspot-center"></div>
-              </div>
-              <div class="hotspot-tooltip">
-                <strong>West Phase (420 Units)</strong><br>
-                Full Kitchen & Bath turnovers @ 3 units/trade/day
-              </div>
-            </div>
-
-            <!-- Hotspot 4: North Peak Clusters -->
-            <div class="hotspot-pin" style="top: 32%; left: 45%;" data-zone="residential">
-              <div class="hotspot-radar">
-                <div class="hotspot-center"></div>
-              </div>
-              <div class="hotspot-tooltip">
-                <strong>North Hillside Ridge (480 Units)</strong><br>
-                Sequenced multi-story plumbing & electrical riser overhaul
-              </div>
-            </div>
-
-            <!-- Hotspot 5: East Valley View Pool & Courts -->
-            <div class="hotspot-pin" style="top: 57%; left: 70%;" data-zone="amenities">
-              <div class="hotspot-radar">
-                <div class="hotspot-center"></div>
-              </div>
-              <div class="hotspot-tooltip">
-                <strong>Valley View Deck & Tennis Complex</strong><br>
-                Exterior staging & staging logistics corridor
-              </div>
-            </div>
           </div>
         </div>
 
@@ -757,6 +929,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Fixed Floating Highlighted Button (Redirects to Toluca Hills Project) -->
+  <a href="#toluca-cgi" class="floating-toluca-btn" id="floating-toluca-btn" title="Go to Toluca Hills Project">
+    <span>Toluca Hills Project</span>
+    <span class="btn-arrow">→</span>
+  </a>
 
   <script src="script.js?v=5"></script>
 </body>
