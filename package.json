@@ -1,0 +1,12 @@
+{
+  "name": "wmfr-website-rebuilt",
+  "version": "1.0.0",
+  "description": "WMFR Website Rebuilt",
+  "scripts": {
+    "dev": "serve -l 5000",
+    "start": "serve -l 5000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
