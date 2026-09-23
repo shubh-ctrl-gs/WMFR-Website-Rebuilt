@@ -373,6 +373,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const EASE_DOCK = bezierEasing(0.65, 0, 0.35, 1);
   const EASE_HERO_SCALE = bezierEasing(0.2, 0.8, 0.2, 1);
   const EASE_SHADOW = bezierEasing(0.42, 0, 0.58, 1);
+  const EASE_THANK_YOU_IN = bezierEasing(0.16, 1, 0.3, 1);
+  const EASE_THANK_YOU_OUT = bezierEasing(0.65, 0, 0.35, 1);
+  const EASE_REVEAL = bezierEasing(0.16, 1, 0.3, 1);
+
+  const introThankYou = document.getElementById('intro-thank-you');
+  const topBar = document.getElementById('top-bar');
+  const mainHeader = document.getElementById('main-header');
+  const mainHeadline = document.getElementById('main-headline');
+  const heroCallout = document.getElementById('hero-callout');
+  const heroBottomRow = document.getElementById('hero-bottom-row');
 
   let introAnimId = null;
   let introStartTime = null;
@@ -448,7 +458,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     introIsRunning = true;
     introStartTime = null;
-    lastShadowIndex = -1;
     if (introAnimId) cancelAnimationFrame(introAnimId);
 
     document.body.classList.add('intro-playing');
@@ -498,10 +507,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const elapsed = (timestamp - introStartTime) / 1000;
       const frame = elapsed * FPS;
 
-      // 1. Sun & Text Rise (0 to 160 frames)
+      // 1. Sun & Text Rise (0 to 160)
       const sunT = clamp(frame / 160);
-      const sunEased = EASE_SUN(sunT);
-      const sunTY = (1 - sunEased) * 210;
+      const sunTY = (1 - EASE_SUN(sunT)) * 210;
       const sunOp = interp(frame, 0, 160, 0.2, 1);
       if (introSunGroup) {
         introSunGroup.style.transform = `translateY(${sunTY.toFixed(2)}px)`;
@@ -509,8 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const textT = clamp(frame / 160);
-      const textEased = EASE_TEXT(textT);
-      const textTY = (1 - textEased) * 45;
+      const textTY = (1 - EASE_TEXT(textT)) * 45;
       const textOp = 0.2 + EASE_SHADOW(textT) * 0.8;
 
       // 2. 3D Shadow Depth (50 -> 160 builds up to 12, 320 -> 365 flattens to 0)
@@ -518,15 +525,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (frame < 50) {
         shadowDepth = 0;
       } else if (frame <= 160) {
-        const sT = EASE_SHADOW((frame - 50) / 110);
-        shadowDepth = sT * 12;
+        shadowDepth = EASE_SHADOW((frame - 50) / 110) * 12;
       } else if (frame <= 320) {
         shadowDepth = 12;
       } else if (frame <= 365) {
-        const fT = EASE_DOCK((frame - 320) / 45);
-        shadowDepth = (1 - fT) * 12;
-      } else {
-        shadowDepth = 0;
+        shadowDepth = (1 - EASE_DOCK((frame - 320) / 45)) * 12;
       }
 
       if (introTextGroup) {
@@ -536,23 +539,12 @@ document.addEventListener('DOMContentLoaded', () => {
         introTextGroup.style.textShadow = build3dShadow(shadowDepth);
       }
 
-      // 3. Vegetation (Palm & Cactus) Pop (150 to 195 frames) - Silky Smooth Remotion Spring
-      if (frame < 150) {
-        if (introCactusGroup) {
-          introCactusGroup.style.opacity = '0';
-          introCactusGroup.style.transform = 'translateY(50px) scale(0)';
-        }
-        if (introPalmGroup) {
-          introPalmGroup.style.opacity = '0';
-          introPalmGroup.style.transform = 'translateY(50px) scale(0)';
-        }
-      } else if (frame <= 195) {
-        const vegT = (frame - 150) / 45;
-        const vegProg = getVegProgress(vegT);
-        const vegScale = vegProg;
+      // 3. Vegetation Pop (150 -> 195)
+      if (frame >= 150) {
+        const vegProg = getVegProgress(clamp((frame - 150) / 45));
         const vegTY = (1 - vegProg) * 50;
-        const vegOp = clamp(vegProg * 3.5, 0, 1);
-        const vegTransform = `translateY(${vegTY.toFixed(2)}px) scale(${vegScale.toFixed(4)})`;
+        const vegOp = clamp(vegProg * 3.5);
+        const vegTransform = `translateY(${vegTY.toFixed(2)}px) scale(${vegProg.toFixed(4)})`;
         if (introCactusGroup) {
           introCactusGroup.style.opacity = vegOp.toFixed(3);
           introCactusGroup.style.transform = vegTransform;
@@ -561,47 +553,31 @@ document.addEventListener('DOMContentLoaded', () => {
           introPalmGroup.style.opacity = vegOp.toFixed(3);
           introPalmGroup.style.transform = vegTransform;
         }
-      } else {
-        if (introCactusGroup) {
-          introCactusGroup.style.opacity = '1';
-          introCactusGroup.style.transform = 'translateY(0px) scale(1)';
-        }
-        if (introPalmGroup) {
-          introPalmGroup.style.opacity = '1';
-          introPalmGroup.style.transform = 'translateY(0px) scale(1)';
-        }
       }
 
-      // 4. Pill Border Draw (175 to 220 frames)
+      // 4. Pill Border Draw (175 -> 220)
       if (introBorderRect) {
         if (frame < 175) {
           introBorderRect.style.strokeDashoffset = String(PERIMETER);
         } else if (frame <= 220) {
-          const bT = clamp((frame - 175) / 45);
-          const bEased = EASE_BORDER(bT);
-          const dashOff = (1 - bEased) * PERIMETER;
-          introBorderRect.style.strokeDashoffset = dashOff.toFixed(1);
+          introBorderRect.style.strokeDashoffset = ((1 - EASE_BORDER(clamp((frame - 175) / 45))) * PERIMETER).toFixed(1);
         } else {
           introBorderRect.style.strokeDashoffset = '0';
         }
       }
 
-      // 5. Light Sweep (220 to 258 frames)
+      // 5. Light Sweep (220 -> 258)
       if (introLightSweep && introShimmerBar) {
         if (frame >= 220 && frame <= 258) {
           introLightSweep.style.display = 'block';
-          const swT = (frame - 220) / 38;
-          const swEased = EASE_SWEEP(swT);
-          const sweepX = -150 + swEased * 580;
-          introShimmerBar.style.transform = `translateX(${sweepX.toFixed(1)}px)`;
-
+          const swEased = EASE_SWEEP((frame - 220) / 38);
+          introShimmerBar.style.transform = `translateX(${(-150 + swEased * 580).toFixed(1)}px)`;
           let swOp = 1;
           if (frame < 224) swOp = (frame - 220) / 4;
           else if (frame > 252) swOp = (258 - frame) / 6;
           introLightSweep.style.opacity = clamp(swOp).toFixed(2);
         } else {
           introLightSweep.style.display = 'none';
-          introLightSweep.style.opacity = '0';
         }
       }
 
@@ -611,18 +587,14 @@ document.addEventListener('DOMContentLoaded', () => {
       let curTY = 0;
 
       if (frame <= 165) {
-        const scT = EASE_HERO_SCALE(frame / 165);
-        curScale = startHeroScale + scT * (baseHeroScale - startHeroScale);
-      } else if (frame < 320) {
-        curScale = baseHeroScale;
-      } else if (frame <= 365) {
+        curScale = startHeroScale + EASE_HERO_SCALE(frame / 165) * (baseHeroScale - startHeroScale);
+      } else if (frame <= 365 && frame >= 320) {
         if (!dockTarget) dockTarget = updateDockTarget();
-        const dkT = clamp((frame - 320) / 45);
-        const dkEased = EASE_DOCK(dkT);
+        const dkEased = EASE_DOCK(clamp((frame - 320) / 45));
         curScale = baseHeroScale + dkEased * (dockTarget.scale - baseHeroScale);
         curTX = dkEased * dockTarget.deltaX;
         curTY = dkEased * dockTarget.deltaY;
-      } else {
+      } else if (frame > 365) {
         if (!dockTarget) dockTarget = updateDockTarget();
         curScale = dockTarget.scale;
         curTX = dockTarget.deltaX;
@@ -631,12 +603,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
       introLogoPill.style.transform = `translate(${curTX.toFixed(2)}px, ${curTY.toFixed(2)}px) scale(${curScale.toFixed(4)})`;
 
-      // 7. Page Reveal Trigger at frame 350
+      // 7. Thank You Text (215 -> 320)
+      if (introThankYou) {
+        if (frame >= 215 && frame <= 320) {
+          introThankYou.setAttribute('aria-hidden', 'false');
+          let tyIn = EASE_THANK_YOU_IN(clamp((frame - 215) / 25)); // 215 -> 240
+          let tyOut = 1 - EASE_THANK_YOU_OUT(clamp((frame - 305) / 15)); // 305 -> 320
+          
+          let tyOp = Math.min(tyIn, tyOut);
+          
+          let y = 0;
+          if (frame < 305) {
+            y = (1 - tyIn) * 18;
+          } else {
+            y = (1 - tyOut) * -12;
+          }
+          
+          let ls = 2 - EASE_THANK_YOU_IN(clamp((frame - 220) / 30)) * 1.5; // 220 -> 250 (2 -> 0.5)
+          
+          introThankYou.style.opacity = tyOp.toFixed(3);
+          introThankYou.style.transform = `translateY(${y.toFixed(1)}px)`;
+          introThankYou.style.letterSpacing = `${ls.toFixed(2)}px`;
+          introThankYou.style.marginTop = `${(350 / 2) * curScale + 30}px`;
+        } else {
+          introThankYou.style.opacity = '0';
+          introThankYou.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      // 8. Page Reveal Trigger at frame 350
       if (frame >= 350 && !document.body.classList.contains('intro-docking')) {
         document.body.classList.add('intro-docking');
       }
 
-      // 8. Dock Hand-off at frame 365
+      // 9. Dock Hand-off at frame 365
       if (frame >= 365) {
         if (headerLogo && headerLogo.classList.contains('dock-hidden')) {
           headerLogo.classList.remove('dock-hidden');
@@ -646,7 +646,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // 9. Completion at frame 375
       if (frame >= TOTAL_FRAMES) {
         finishIntro();
         return;
@@ -667,20 +666,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('intro-playing');
     document.body.classList.add('intro-docking');
 
-    if (introCactusGroup) {
-      introCactusGroup.style.opacity = '1';
-      introCactusGroup.style.transform = 'translateY(0px) scale(1)';
-    }
-    if (introPalmGroup) {
-      introPalmGroup.style.opacity = '1';
-      introPalmGroup.style.transform = 'translateY(0px) scale(1)';
-    }
+    if (introCactusGroup) { introCactusGroup.style.opacity = '1'; introCactusGroup.style.transform = 'translateY(0px) scale(1)'; }
+    if (introPalmGroup) { introPalmGroup.style.opacity = '1'; introPalmGroup.style.transform = 'translateY(0px) scale(1)'; }
     if (introTextGroup) {
       introTextGroup.style.transform = 'translateY(0px)';
       introTextGroup.style.opacity = '1';
       introTextGroup.style.webkitTextStroke = '2px #FFFFFF';
       introTextGroup.style.textShadow = 'none';
     }
+
 
     if (introOverlay) {
       introOverlay.classList.add('fade-out');

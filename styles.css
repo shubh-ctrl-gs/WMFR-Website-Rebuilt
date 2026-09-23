@@ -1574,6 +1574,26 @@ body.intro-docking .hero-section {
   pointer-events: none;
 }
 
+.intro-thank-you {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  font-family: 'Brush Script MT', cursive;
+  font-weight: 400;
+  font-size: 58px;
+  color: var(--wmfr-navy);
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(9, 68, 131, 0.12);
+  opacity: 0;
+  will-change: transform, opacity, letter-spacing;
+}
+
 .intro-logo-pill {
   position: relative;
   width: 900px;
