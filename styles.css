@@ -431,12 +431,18 @@ body {
    HERO / PRIMARY CASE STUDY SECTION (AVA TOLUCA HILLS)
    ───────────────────────────────────────────────────────────── */
 .hero-section {
-  padding: 48px 0 64px 0;
+  min-height: calc(100vh - var(--header-height) - var(--topbar-height) + 40px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 0 100px 0;
   background-color: #FFFFFF;
   position: relative;
+  box-sizing: border-box;
 }
 
 .hero-container {
+  width: 100%;
   max-width: var(--container-max-w);
   margin: 0 auto;
   padding: 0 32px;
@@ -1796,61 +1802,6 @@ body.intro-docking .hero-section {
   visibility: hidden !important;
 }
 
-/* Fixed Floating Highlighted Button (Bottom Right) */
-.floating-toluca-btn {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 990;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, #E07D08 0%, #D97706 100%);
-  color: #FFFFFF !important;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 800;
-  padding: 14px 24px;
-  border-radius: 12px;
-  text-decoration: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  box-shadow: 0 10px 28px rgba(224, 125, 8, 0.48), 0 4px 14px rgba(0, 0, 0, 0.35);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-
-.floating-toluca-btn .btn-arrow {
-  font-size: 18px;
-  font-weight: 900;
-  transition: transform 0.25s ease;
-  line-height: 1;
-}
-
-.floating-toluca-btn:hover {
-  background: linear-gradient(135deg, #EE8809 0%, #E07D08 100%);
-  color: #FFFFFF !important;
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 16px 36px rgba(224, 125, 8, 0.65), 0 6px 18px rgba(0, 0, 0, 0.45);
-}
-
-.floating-toluca-btn:hover .btn-arrow {
-  transform: translateX(5px);
-}
-
-.floating-toluca-btn:active {
-  transform: translateY(-1px) scale(0.98);
-  box-shadow: 0 8px 20px rgba(224, 125, 8, 0.4);
-}
-
-@media (max-width: 768px) {
-  .floating-toluca-btn {
-    bottom: 20px;
-    right: 20px;
-    padding: 12px 18px;
-    font-size: 13.5px;
-    border-radius: 10px;
-  }
-}
 
 /* ─────────────────────────────────────────────────────────────
    SUBPAGE STYLING (About, Projects, Process & Contact)

@@ -698,18 +698,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Floating Toluca Hills Project Button Click (Smooth Scroll)
-  const floatingTolucaBtn = document.getElementById('floating-toluca-btn');
-  if (floatingTolucaBtn) {
-    floatingTolucaBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetSec = document.getElementById('toluca-cgi');
-      if (targetSec) {
-        targetSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  }
-
   // Auto-run intro on initial load
   runIntroAnimation();
 });
