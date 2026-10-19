@@ -696,9 +696,56 @@ document.addEventListener('DOMContentLoaded', () => {
         introOverlay.classList.add('hidden');
       }, 400);
     }
+
+    try {
+      sessionStorage.setItem('wmfr_intro_shown', 'true');
+    } catch (e) {}
   }
 
-  // Auto-run intro on initial load
-  runIntroAnimation();
+  // Allow skipping the intro on click or Escape key
+  if (introOverlay) {
+    introOverlay.addEventListener('click', () => {
+      if (introIsRunning) finishIntro();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && introIsRunning) {
+      finishIntro();
+    }
+  });
+
+  // ── 7. Intro Animation Execution (Plays once on first open, skipped on return to Home) ──
+  const urlParams = new URLSearchParams(window.location.search);
+  const forceReplay = urlParams.has('replay') || urlParams.has('intro');
+  let hasSeenIntro = false;
+  try {
+    hasSeenIntro = sessionStorage.getItem('wmfr_intro_shown') === 'true';
+  } catch (e) {
+    hasSeenIntro = false;
+  }
+
+  if (introOverlay) {
+    if (!hasSeenIntro || forceReplay) {
+      // First visit in this session: play animation and mark as seen
+      try {
+        sessionStorage.setItem('wmfr_intro_shown', 'true');
+      } catch (e) {}
+      runIntroAnimation();
+    } else {
+      // Returning to Home page: skip intro animation completely for fast navigation
+      introOverlay.classList.add('hidden');
+      introOverlay.setAttribute('aria-hidden', 'true');
+      if (headerLogo) {
+        headerLogo.classList.remove('dock-hidden');
+      }
+      document.body.classList.remove('intro-playing');
+    }
+  } else {
+    // If user entered on any subpage, mark as seen so visiting Home later is instant
+    try {
+      sessionStorage.setItem('wmfr_intro_shown', 'true');
+    } catch (e) {}
+  }
 });
 

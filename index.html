@@ -5,8 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Western Multi-Family Renovation | Large-Scale Occupied CAPEX Remodel</title>
   <meta name="description" content="WMFR sets the standard for high-velocity CAPEX interior remodeling on large multi-family communities up to 1,200+ units while fully occupied. Lead contractor for AVA Toluca Hills.">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
   <link rel="icon" type="image/jpeg" href="assets/wmfr_logo.jpg">
+  <script>
+    (function() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var forceReplay = params.has('replay') || params.has('intro');
+        if (!forceReplay && sessionStorage.getItem('wmfr_intro_shown')) {
+          document.documentElement.classList.add('intro-skip');
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
 
@@ -816,6 +827,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

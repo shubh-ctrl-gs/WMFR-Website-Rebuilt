@@ -8,4 +8,6 @@ preview_*.png
 
 # Node
 node_modules/
-
+# Dev logs and server files
+*.log
+*.pid

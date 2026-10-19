@@ -1605,6 +1605,7 @@ body.intro-docking .hero-section {
   pointer-events: none;
 }
 
+html.intro-skip .intro-overlay,
 .intro-overlay.hidden {
   display: none !important;
 }
