@@ -5,3 +5,7 @@ Thumbs.db
 # Dev scratch & local reference documents
 preview_*.png
 *.docx
+
+# Node
+node_modules/
+

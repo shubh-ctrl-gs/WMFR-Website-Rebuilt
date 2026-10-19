@@ -69,12 +69,12 @@
       <text x="0" y="205" fill="#094483" stroke="#FFFFFF" stroke-width="1.5" paint-order="stroke fill">MULTI-FAMILY</text>
     </g>
 
-    <!-- RENOVATION -->
+    <!-- REMODEL -->
     <g font-size="78" letter-spacing="3" text-anchor="start">
-      <text x="0" y="283" fill="#9CA3AF">RENOVATION</text>
-      <text x="0" y="282" fill="#D1D5DB">RENOVATION</text>
-      <text x="0" y="280" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4">RENOVATION</text>
-      <text x="0" y="280" fill="#094483" stroke="#FFFFFF" stroke-width="1.5" paint-order="stroke fill">RENOVATION</text>
+      <text x="0" y="283" fill="#9CA3AF">REMODEL</text>
+      <text x="0" y="282" fill="#D1D5DB">REMODEL</text>
+      <text x="0" y="280" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4">REMODEL</text>
+      <text x="0" y="280" fill="#094483" stroke="#FFFFFF" stroke-width="1.5" paint-order="stroke fill">REMODEL</text>
     </g>
   </g>
 

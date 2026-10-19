@@ -281,19 +281,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── 5. NEW: CUSTOM REMODEL Tab Click Special Action ──
+  // ── 5. Now: Offering Custom Home Remodel Tab Click Special Action ──
   const badgeCustom = document.getElementById('badge-custom-remodel');
   if (badgeCustom) {
     badgeCustom.addEventListener('click', (e) => {
-      e.stopPropagation();
       const remodelSection = document.getElementById('custom-remodel');
       if (remodelSection) {
+        e.preventDefault();
+        e.stopPropagation();
         remodelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
         remodelSection.style.transition = 'box-shadow 0.4s ease';
         remodelSection.style.boxShadow = '0 0 30px rgba(229, 152, 25, 0.6)';
         setTimeout(() => {
           remodelSection.style.boxShadow = '';
         }, 1800);
+      } else {
+        window.location.href = 'index.html#custom-remodel';
       }
     });
   }
@@ -393,28 +396,39 @@ document.addEventListener('DOMContentLoaded', () => {
   function build3dShadow(depth) {
     if (depth < 0.1) return 'none';
     const parts = [];
-    const sw = Math.min(2.2, depth * 0.35);
-    parts.push(
-      (-sw).toFixed(1) + 'px ' + (-sw).toFixed(1) + 'px 0 #FFFFFF',
-      (sw).toFixed(1) + 'px ' + (-sw).toFixed(1) + 'px 0 #FFFFFF',
-      (-sw).toFixed(1) + 'px ' + (sw).toFixed(1) + 'px 0 #FFFFFF',
-      (sw).toFixed(1) + 'px ' + (sw).toFixed(1) + 'px 0 #FFFFFF'
-    );
-    const steps = Math.max(1, Math.round(depth * 1.5));
-    for (let i = 1; i <= steps; i++) {
-      const frac = i / steps;
-      const curDist = depth * frac * 0.85;
+    const sw = Math.min(2.5, depth * 0.4);
+    const borderOffsets = [
+      [-sw, -sw], [0, -sw], [sw, -sw],
+      [-sw, 0], [sw, 0],
+      [-sw, sw], [0, sw], [sw, sw],
+      [-sw * 0.7, -sw * 0.7], [sw * 0.7, -sw * 0.7],
+      [-sw * 0.7, sw * 0.7], [sw * 0.7, sw * 0.7]
+    ];
+    for (let b = 0; b < borderOffsets.length; b++) {
+      parts.push(borderOffsets[b][0].toFixed(1) + 'px ' + borderOffsets[b][1].toFixed(1) + 'px 0 #FFFFFF');
+    }
+    const totalLayers = Math.max(1, Math.round(depth * 3.5));
+    for (let i = 1; i <= totalLayers; i++) {
+      const frac = i / totalLayers;
+      const curDist = depth * frac;
+      const x = curDist * 0.85;
+      const y = curDist * 0.85;
       const r = Math.round(225 - frac * 115);
       const g = Math.round(230 - frac * 115);
       const b = Math.round(236 - frac * 110);
-      parts.push(curDist.toFixed(1) + 'px ' + curDist.toFixed(1) + 'px 0 rgb(' + r + ',' + g + ',' + b + ')');
+      const color = 'rgb(' + r + ',' + g + ',' + b + ')';
+      parts.push(
+        x.toFixed(1) + 'px ' + y.toFixed(1) + 'px 0 ' + color,
+        (x - 0.7).toFixed(1) + 'px ' + y.toFixed(1) + 'px 0 ' + color,
+        x.toFixed(1) + 'px ' + (y - 0.7).toFixed(1) + 'px 0 ' + color
+      );
     }
     const shadowDist = depth * 0.85;
     parts.push(
       shadowDist.toFixed(1) + 'px ' + shadowDist.toFixed(1) + 'px 0 #05182B',
-      (shadowDist + 1.0).toFixed(1) + 'px ' + (shadowDist + 1.0).toFixed(1) + 'px 0 #05182B',
-      (shadowDist + 2.0).toFixed(1) + 'px ' + (shadowDist + 2.0).toFixed(1) + 'px 0 rgba(5,24,43,0.4)',
-      (shadowDist + 3.0).toFixed(1) + 'px ' + (shadowDist + 3.0).toFixed(1) + 'px 0 rgba(5,24,43,0.2)'
+      (shadowDist + 0.8).toFixed(1) + 'px ' + (shadowDist + 0.8).toFixed(1) + 'px 0 #05182B',
+      (shadowDist + 2).toFixed(1) + 'px ' + (shadowDist + 2).toFixed(1) + 'px 4px rgba(0, 0, 0, 0.5)',
+      (shadowDist + 4).toFixed(1) + 'px ' + (shadowDist + 4).toFixed(1) + 'px 8px rgba(0, 0, 0, 0.35)'
     );
     return parts.join(', ');
   }
